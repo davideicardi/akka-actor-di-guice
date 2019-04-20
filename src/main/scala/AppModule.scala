@@ -11,7 +11,9 @@ class AppModule extends AbstractModule {
 
   @Provides @Singleton
   def providePrinterActor(actorSystem: ActorSystem, jobFactory: PrintJobActor.Factory): PrinterActor.Ref = {
-    () => actorSystem.actorOf(Props(new PrinterActor(jobFactory)))
+    val instance = actorSystem.actorOf(Props(new PrinterActor(jobFactory)))
+
+    () => instance
   }
 
   @Provides @Singleton
