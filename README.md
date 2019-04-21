@@ -1,5 +1,7 @@
 # akka-actor-di-guice
 
+**NOTE: Work in progress ...** 
+
 A minimal Akka Actor example using Guice for dependency injection.
 
 Features:
@@ -11,6 +13,11 @@ Features:
 - Unit test friendly
 
 All the "magic" is inside the Guice `AppModule`, where actors are bind and factories are created.
+
+## Doubts
+
+- Should `Props` be serializable, currently they are not ...
+- Why documentation suggest to use `IndirectActorProducer`?
 
 ## References
 
