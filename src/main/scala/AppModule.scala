@@ -20,24 +20,22 @@ class AppModule extends AbstractModule {
     bind(classOf[PrinterActor])
   }
 
-  // Provide a reference to an actor
+  // Provide a reference to printer actor
   @Provides @Singleton
   def providePrinterActor(actorSystem: ActorSystem): PrinterActor.Ref = {
-    val instance = actorSystem.actorOf(Props(classOf[GuiceActorProducer[PrinterActor]]))
+    val instance = actorSystem.actorOf(Props(classOf[GuiceActorProducer], classOf[PrinterActor]))
 
     () => instance
   }
 
-  // Provide a factory of other actors
+  // Provide a factory of print job actors
   @Provides @Singleton
   def providePrinterJobFactory(): PrintJobActor.Factory = {
-    context: ActorContext => context.actorOf(Props(classOf[GuiceActorProducer[PrintJobActor]]))
+    context: ActorContext => context.actorOf(Props(classOf[GuiceActorProducer], classOf[PrintJobActor]))
   }
+}
 
-  class GuiceActorProducer[T <: Actor]() extends IndirectActorProducer {
-    override def actorClass: Class[_ <: Actor] = classOf[T]
-
-    // Get the injector instance from a static variable to avoid passing it to Props
-    override def produce: Actor = AppModule.injector.getInstance(classOf[T])
-  }
+class GuiceActorProducer(ac: Class[_ <: Actor]) extends IndirectActorProducer {
+  override def produce: Actor = AppModule.injector.getInstance(ac)
+  override def actorClass: Class[_ <: Actor] = ac
 }

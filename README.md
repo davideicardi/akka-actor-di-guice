@@ -14,11 +14,6 @@ Features:
 
 All the "magic" is inside the Guice `AppModule`, where actors are bind and factories are created.
 
-## Doubts
-
-- Should `Props` be serializable, currently they are not ...
-- Why documentation suggest to use `IndirectActorProducer`?
-
 ## References
 
 - http://letitcrash.com/post/55958814293/akka-dependency-injection
