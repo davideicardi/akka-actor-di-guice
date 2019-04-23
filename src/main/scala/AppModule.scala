@@ -1,14 +1,9 @@
-import akka.actor.{Actor, ActorContext, ActorSystem, IndirectActorProducer, Props}
-import com.google.inject.{AbstractModule, Guice, Injector, Provides, Singleton}
-
-object AppModule {
-  // Global instance of the injector that can be used by the GuiceActorProducer
-  lazy val injector: Injector = Guice.createInjector(new AppModule)
-}
+import actorsInjection.{ActorDep, ActorFactory, GuiceActorFactory, GuiceActorDep}
+import akka.actor.ActorSystem
+import com.google.inject._
 
 class AppModule extends AbstractModule {
   override def configure(): Unit = {
-
     // Actor system
     bind(classOf[ActorSystem]).toInstance(ActorSystem.create())
 
@@ -20,22 +15,15 @@ class AppModule extends AbstractModule {
     bind(classOf[PrinterActor])
   }
 
-  // Provide a reference to printer actor
-  @Provides @Singleton
-  def providePrinterActor(actorSystem: ActorSystem): PrinterActor.Ref = {
-    val instance = actorSystem.actorOf(Props(classOf[GuiceActorProducer], classOf[PrinterActor]))
-
-    () => instance
+  @Provides
+  @Singleton
+  def providePrinterActor(actorSystem: ActorSystem): ActorDep[PrinterActor] = {
+    new GuiceActorDep[PrinterActor](actorSystem)
   }
 
-  // Provide a factory of print job actors
-  @Provides @Singleton
-  def providePrinterJobFactory(): PrintJobActor.Factory = {
-    context: ActorContext => context.actorOf(Props(classOf[GuiceActorProducer], classOf[PrintJobActor]))
+  @Provides
+  @Singleton
+  def providePrinterJobFactory(): ActorFactory[PrintJobActor] = {
+    new GuiceActorFactory[PrintJobActor]()
   }
-}
-
-class GuiceActorProducer(ac: Class[_ <: Actor]) extends IndirectActorProducer {
-  override def produce: Actor = AppModule.injector.getInstance(ac)
-  override def actorClass: Class[_ <: Actor] = ac
 }
