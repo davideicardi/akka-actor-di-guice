@@ -1,5 +1,7 @@
 # akka-actor-di-guice
 
+**NOTE: Work in progress ...** 
+
 A minimal Akka Actor example using Guice for dependency injection.
 
 Features:
