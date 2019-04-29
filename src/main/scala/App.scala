@@ -1,5 +1,5 @@
-import actorsInjection.ActorDep
 import com.google.inject.Inject
+import it.agilelab.akka.guice.ActorDep
 
 class App @Inject() (printer: ActorDep[PrinterActor]) {
 

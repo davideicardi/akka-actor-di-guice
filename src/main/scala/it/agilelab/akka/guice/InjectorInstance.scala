@@ -1,4 +1,4 @@
-package actorsInjection
+package it.agilelab.akka.guice
 
 import java.util.concurrent.atomic.AtomicReference
 

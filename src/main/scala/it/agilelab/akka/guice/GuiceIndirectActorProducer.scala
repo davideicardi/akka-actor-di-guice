@@ -1,4 +1,4 @@
-package actorsInjection
+package it.agilelab.akka.guice
 
 import akka.actor.{Actor, IndirectActorProducer}
 

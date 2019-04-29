@@ -1,7 +1,7 @@
 import PrinterActor.{JobCompletedMsg, PrintDocumentMsg}
-import actorsInjection.ActorFactory
 import akka.actor._
 import com.google.inject.Inject
+import it.agilelab.akka.guice.ActorFactory
 
 object PrinterActor {
   case class PrintDocumentMsg(jobName: String, lines: collection.immutable.Seq[String])

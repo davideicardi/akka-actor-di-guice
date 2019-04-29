@@ -1,5 +1,5 @@
-import actorsInjection.InjectorInstance
 import com.google.inject.Guice
+import it.agilelab.akka.guice.InjectorInstance
 
 object Program {
   def main(args: Array[String]): Unit = {

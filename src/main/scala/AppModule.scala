@@ -1,6 +1,6 @@
-import actorsInjection.{ActorDep, ActorFactory, GuiceActorFactory, GuiceActorDep}
 import akka.actor.ActorSystem
 import com.google.inject._
+import it.agilelab.akka.guice.{ActorDep, ActorFactory, GuiceActorDep, GuiceActorFactory}
 
 class AppModule extends AbstractModule {
   override def configure(): Unit = {
